@@ -1,47 +1,73 @@
 <template>
   <div class="container py-4" v-if="pokemon">
-    <h2 class="mb-3">{{ pokemon.name.toUpperCase() }}</h2>
-
     <div class="col text-center">
-      <div class="card mx-auto" style="width: 18rem">
+      <div class="card mx-auto card border-warning" style="width: 18rem">
         <img :src="pokemon.sprites.front_default" class="card-img-top" />
       </div>
     </div>
     <div class="container mt-4">
       <div class="row justify-content-center">
-        <div class="col-12 col-md-6 text-center">
-          <p><strong>Height:</strong> {{ pokemon.height }}</p>
-          <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
-          <p>
-            <strong>Types:</strong>
-            {{ pokemon.types.map((t) => t.type.name).join(", ") }}
-          </p>
-
+        <div class="col-12 col-md-6">
           <div class="mt-4">
+            <!-- Row: Name -->
             <div class="d-flex align-items-center mb-3">
-              <label class="me-2 mb-0"><strong>Name:</strong></label>
+              <label class="me-3 mb-0 text-end" style="width: 80px"
+                ><strong>Name:</strong></label
+              >
               <input
                 v-model="editName"
                 class="form-control"
                 placeholder="Edit Name"
-                style="max-width: 300px"
               />
             </div>
 
-            <!-- <button class="btn btn-primary w-100" @click="updateInfo">
-              Save Changes
-            </button> -->
-            <button
-              class="btn btn-primary w-100"
-              :disabled="saving"
-              @click="updateInfo"
-            >
-              <span
-                v-if="saving"
-                class="spinner-border spinner-border-sm me-2"
-              ></span>
-              {{ saving ? "Saving..." : "Save Changes" }}
-            </button>
+            <!-- Row: Height -->
+            <div class="d-flex align-items-center mb-3">
+              <label class="me-3 mb-0 text-end" style="width: 80px"
+                ><strong>Height:</strong></label
+              >
+              <input :value="pokemon?.height" class="form-control" disabled />
+            </div>
+
+            <!-- Row: Weight -->
+            <div class="d-flex align-items-center mb-3">
+              <label class="me-3 mb-0 text-end" style="width: 80px"
+                ><strong>Weight:</strong></label
+              >
+              <input :value="pokemon?.weight" class="form-control" disabled />
+            </div>
+
+            <!-- Row: Types -->
+            <div class="d-flex align-items-center mb-4">
+              <label class="me-3 mb-0 text-end" style="width: 80px"
+                ><strong>Types:</strong></label
+              >
+              <input
+                :value="pokemon.types.map((t) => t.type.name).join(', ')"
+                class="form-control"
+                disabled
+              />
+            </div>
+
+            <div class="d-flex justify-content-center gap-2">
+              <!-- Back Button -->
+              <button class="btn btn-secondary w-40" @click="router.push('/')">
+                Back
+              </button>
+
+              <!-- Save Button -->
+              <button
+                class="btn btn-primary w-40"
+                :disabled="saving"
+                @click="updateInfo"
+              >
+                <span
+                  v-if="saving"
+                  class="spinner-border spinner-border-sm me-2"
+                ></span>
+                {{ saving ? "Saving..." : "Save Changes" }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -52,7 +78,7 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
 import { usePokemonApi } from "@/stores/pokemon-api";
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -63,6 +89,12 @@ const store = usePokemonApi();
 const pokemon = computed(() => store.pokemonList.find((p) => p.id === id));
 const editName = ref(pokemon.value?.name || "");
 const saving = ref(false);
+
+watchEffect(() => {
+  if (!pokemon?.value) {
+    router.push("/");
+  }
+});
 
 const updateInfo = async () => {
   saving.value = true;

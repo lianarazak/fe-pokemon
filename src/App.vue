@@ -6,21 +6,12 @@ import HelloWorld from "./components/HelloWorld.vue";
 <template>
   <header>
     <img
-      alt="Vue logo"
+      alt="Pokemon logo"
       class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
+      src="@/assets/pokemon-logo.svg"
+      width="350"
+      height="200"
     />
-
-    <!-- <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div> -->
   </header>
 
   <RouterView />
@@ -35,6 +26,8 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 nav {
@@ -71,6 +64,8 @@ nav a:first-of-type {
 
   .logo {
     margin: 0 2rem 0 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   header .wrapper {

@@ -1,11 +1,10 @@
 <template>
-  <div class="container py-4">
-    <!-- <div> -->
-    <h1>Pokémon</h1>
-
-    <div class="row mb-3">
-      <div class="col-12 col-md-4">
+  <div class="container py-3">
+    <div class="row mb-4 justify-content-end">
+      <div class="col-auto d-flex align-items-center">
+        <label for="search" class="me-2 mb-0">Search:</label>
         <input
+          id="search"
           v-model="search"
           class="form-control"
           placeholder="Search Pokémon..."
