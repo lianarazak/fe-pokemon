@@ -50,6 +50,6 @@ const filteredPokemon = computed(() =>
 const loading = computed(() => store.loading);
 
 function goToDetail(id) {
-  router.push(`/${id}`);
+  router.push(`/pokemon/${id}`);
 }
 </script>

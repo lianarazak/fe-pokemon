@@ -20,7 +20,7 @@ const router = createRouter({
     //   component: () => import("../views/AboutView.vue"),
     // },
     { path: "/", component: Index },
-    { path: "/:id", component: Detail },
+    { path: "/pokemon/:id", component: Detail },
   ],
 });
 
